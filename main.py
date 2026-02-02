@@ -11,70 +11,141 @@ from fpdf import FPDF
 pd.set_option("styler.render.max_elements", 1000000)
 st.set_page_config(page_title="Security Ranker Pro", layout="wide", page_icon="🛡️")
 
-# --- 2. PROFESSIONAL ENTERPRISE UI THEMING ---
+# --- 2. JAW-DROPPING UI THEMING (REVISUALIZED) ---
 st.markdown("""
     <style>
-    /* Global Background & Font */
-    .stApp { background-color: #f1f5f9; font-family: 'Inter', sans-serif; }
-    
-    /* Custom Card Styling */
-    .main-card {
-        background: white;
-        padding: 2rem;
-        border-radius: 16px;
-        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        border: 1px solid #e2e8f0;
-        margin-bottom: 20px;
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+
+    /* Global Overrides */
+    html, body, [class*="css"] {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: #f8fafc;
     }
-    
-    /* Header Section */
+
+    /* Main Container Padding */
+    .block-container {
+        padding-top: 2rem !important;
+        padding-bottom: 5rem !important;
+    }
+
+    /* Professional Header Banner */
     .header-banner {
-        background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%);
-        padding: 2.5rem;
-        border-radius: 16px;
+        background: radial-gradient(circle at top left, #0f172a 0%, #1e293b 100%);
+        padding: 3rem;
+        border-radius: 24px;
         color: white;
-        margin-bottom: 2rem;
-        border-left: 8px solid #3b82f6;
+        margin-bottom: 2.5rem;
+        border: 1px solid rgba(255,255,255,0.1);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        position: relative;
+        overflow: hidden;
+    }
+    .header-banner::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 400px;
+        height: 400px;
+        background: rgba(59, 130, 246, 0.1);
+        border-radius: 50%;
+        filter: blur(80px);
     }
 
-    /* Metric Cards */
-    [data-testid="stMetricValue"] { font-size: 2.2rem !important; font-weight: 800 !important; color: #1e293b; }
+    /* Glassmorphic Cards */
+    .main-card {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        padding: 2rem;
+        border-radius: 20px;
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        margin-bottom: 25px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .main-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Metric Styling */
     div[data-testid="metric-container"] {
-        background: white;
-        border: 1px solid #e2e8f0;
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
         padding: 1.5rem !important;
-        border-radius: 12px !important;
-        box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+        border-radius: 16px !important;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+        text-align: center;
+    }
+    div[data-testid="stMetricValue"] {
+        color: #0f172a !important;
+        font-weight: 800 !important;
+        letter-spacing: -1px;
     }
 
-    /* Tabs Styling */
-    .stTabs [data-baseweb="tab-list"] { gap: 10px; background-color: transparent; }
+    /* Tab Styling Overhaul */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 8px;
+        background-color: #f1f5f9;
+        padding: 6px;
+        border-radius: 12px;
+    }
     .stTabs [data-baseweb="tab"] {
-        height: 50px;
-        white-space: pre-wrap;
-        background-color: #ffffff;
-        border-radius: 8px 8px 0px 0px;
-        gap: 1px;
-        padding: 10px 20px;
-        border: 1px solid #e2e8f0;
-    }
-    .stTabs [aria-selected="true"] { background-color: #3b82f6 !important; color: white !important; }
-
-    /* Buttons */
-    .stButton>button {
-        width: 100%;
         border-radius: 8px;
-        height: 3em;
-        background: #2563eb;
-        color: white;
-        font-weight: 600;
+        padding: 10px 24px;
+        background-color: transparent;
         border: none;
-        transition: all 0.3s ease;
+        color: #64748b;
+        font-weight: 600;
+        transition: all 0.2s;
     }
-    .stButton>button:hover { background: #1d4ed8; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
-    
-    /* Sidebar */
-    .css-1639199 { background-color: #ffffff; border-right: 1px solid #e2e8f0; }
+    .stTabs [aria-selected="true"] {
+        background-color: #ffffff !important;
+        color: #2563eb !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    /* Animated Buttons */
+    .stButton>button {
+        border-radius: 12px;
+        padding: 0.6rem 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        color: white;
+        border: none;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39);
+    }
+    .stButton>button:hover {
+        transform: scale(1.02);
+        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+        background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+    }
+
+    /* Sidebar Refinement */
+    section[data-testid="stSidebar"] {
+        background-color: #ffffff;
+        border-right: 1px solid #e2e8f0;
+    }
+    section[data-testid="stSidebar"] .block-container {
+        padding-top: 3rem;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+    /* File Uploader Decor */
+    [data-testid="stFileUploadDropzone"] {
+        border: 2px dashed #cbd5e1;
+        border-radius: 16px;
+        background: #f8fafc;
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -91,8 +162,8 @@ class PDFReport(FPDF):
     def add_secret_stamps(self, p_num):
         self.set_font("Arial", 'B', 8)
         self.set_text_color(170, 170, 170)
-        self.text(95, 10, "SECRET")
-        self.text(95, 287, "SECRET")
+        self.text(95, 10, "PSOPC")
+        self.text(95, 287, "PSOPC")
         self.set_font("Arial", '', 8)
         self.text(180, 287, f"Page {p_num} of 3")
 
@@ -166,7 +237,7 @@ def process_excel_with_stats(file, selected_date):
     xls = pd.ExcelFile(file, engine='openpyxl')
     total_sheets = len(xls.sheet_names)
     for i, sheet_name in enumerate(xls.sheet_names):
-        status_text.text(f"Processing sheet: {sheet_name}...")
+        status_text.markdown(f"🔍 **Analyzing:** {sheet_name}...")
         progress_bar.progress((i + 1) / total_sheets)
         df = xls.parse(sheet_name)
         df.columns = df.columns.str.strip()
@@ -192,45 +263,52 @@ def process_excel_with_stats(file, selected_date):
 
 # --- 6. SIDEBAR & HEADER ---
 with st.sidebar:
-    st.image("https://cdn-icons-png.flaticon.com/512/1067/1067357.png", width=80)
-    st.title("System Control")
+    st.markdown("""
+        <div style='text-align: center; padding-bottom: 20px;'>
+            <img src="https://cdn-icons-png.flaticon.com/512/1067/1067357.png" width="80" style='filter: drop-shadow(0 10px 8px rgba(0,0,0,0.1));'>
+            <h2 style='margin-top:15px; color: #0f172a;'>Shield Data Compiler</h2>
+        </div>
+    """, unsafe_allow_html=True)
+    
     st.markdown("---")
-    st.info(f"**Database Status:** {len(st.session_state['monthly_db'])} Log Entries")
+    st.metric("Total Rows Inserted", f"{len(st.session_state['monthly_db'])} Logs")
     
     if st.session_state['file_registry']:
-        st.subheader("📜 Recent Uploads")
+        st.subheader("📊 Session Logs")
         hist_df = pd.DataFrame(st.session_state['file_registry'])
         st.dataframe(hist_df[['filename', 'date']], use_container_width=True, hide_index=True)
     
-    if st.button("🗑️ Wipe System Memory"):
+    st.markdown("<br>"*5, unsafe_allow_html=True)
+    if st.button("🔴 RESET DATABASE"):
         st.session_state['monthly_db'] = pd.DataFrame()
         st.session_state['file_registry'] = []
         st.rerun()
 
 st.markdown("""
     <div class="header-banner">
-        <h1 style='margin:0;'>Shield Raw Data Compiler</h1>
-        <p style='margin:0; opacity: 0.8;'>Created By: Python Solutions OPC</p>
+        <h1 style='margin:0; font-weight: 800; font-size: 2.8rem;'>Shield Raw Data Compiler</h1>
+        <p style='margin:0; opacity: 0.8; font-size: 1.1rem;'>Compiler for Applied Threat Intelligence | Python Solutions OPC</p>
     </div>
     """, unsafe_allow_html=True)
 
 # --- 7. TABS ---
-t_entry, t_monthly, t_report = st.tabs(["📤 DATA INGESTION", "📊 RANKINGS", "📄 REPORT GENERATOR"])
+t_entry, t_monthly, t_report = st.tabs(["📥 DATA INGESTION", "🛡️ THREAT RANKINGS", "📈 EXECUTIVE REPORT"])
 
 with t_entry:
     st.markdown('<div class="main-card">', unsafe_allow_html=True)
-    st.subheader("📥 Log Ingestion")
+    st.subheader("Log File Upload")
     c1, c2 = st.columns([1, 2])
     with c1:
-        log_date = st.date_input("Processing Date", value=datetime.now())
+        log_date = st.date_input("Audit Date", value=datetime.now())
     with c2:
-        up_file = st.file_uploader("Upload Security Excel Export", type=["xlsx"])
+        up_file = st.file_uploader("Upload XLSX Security Logs", type=["xlsx"])
     
-    if up_file and st.button("🚀 PROCESS DATA"):
+    if up_file and st.button("✨ START COMPILATION"):
         new_df = process_excel_with_stats(up_file, log_date)
         st.session_state['monthly_db'] = pd.concat([st.session_state['monthly_db'], new_df], ignore_index=True)
         st.session_state['file_registry'].append({'filename': up_file.name, 'date': log_date, 'rows': len(new_df)})
-        st.success("Successfully ingested log data.")
+        st.balloons()
+        st.success("Log data synchronized successfully.")
     st.markdown('</div>', unsafe_allow_html=True)
 
 with t_monthly:
@@ -239,37 +317,37 @@ with t_monthly:
         db_blocked = db[db['Status'].astype(str).str.contains(r'(?i)blocked', na=False)]
         
         st.markdown('<div class="main-card">', unsafe_allow_html=True)
+        st.subheader("Global Security Rankings")
         f1, f2, f3 = st.columns([2, 2, 1])
-        with f1: dr = st.date_input("Filter Date Range", [db['Processed_Date'].min(), db['Processed_Date'].max()])
-        with f2: devs = sorted(db['Device Name'].unique().tolist()); sel_dev = st.selectbox("Select Sensor", ["ALL DEVICES"] + devs)
-        with f3: lim = st.select_slider("Ranking Depth", options=[50, 100, 200, 500, 1000], value=200)
+        with f1: dr = st.date_input("Timeframe", [db['Processed_Date'].min(), db['Processed_Date'].max()])
+        with f2: devs = sorted(db['Device Name'].unique().tolist()); sel_dev = st.selectbox("Sensor View", ["ALL ACTIVE SENSORS"] + devs)
+        with f3: lim = st.select_slider("Row Depth", options=[50, 100, 200, 500, 1000], value=200)
         
         mask = (db_blocked['Processed_Date'] >= dr[0])
         if len(dr) > 1: mask &= (db_blocked['Processed_Date'] <= dr[1])
-        if sel_dev != "ALL DEVICES": mask &= (db_blocked['Device Name'] == sel_dev)
+        if sel_dev != "ALL ACTIVE SENSORS": mask &= (db_blocked['Device Name'] == sel_dev)
         
         res = db_blocked[mask].sort_values(['Count', 'Device Name'], ascending=[False, True]).head(lim).copy()
         res.index = range(1, len(res) + 1)
         
         st.dataframe(
-            res.style.apply(lambda r: ['background-color: #fef2f2; border-left: 5px solid #ef4444; font-weight: bold']*len(r) if r.get('Is_Repeat', False) else ['']*len(r), axis=1), 
-            use_container_width=True, height=500
+            res.style.apply(lambda r: ['background-color: #fff1f2; color: #991b1b; font-weight: bold']*len(r) if r.get('Is_Repeat', False) else ['']*len(r), axis=1), 
+            use_container_width=True, height=600
         )
         st.markdown('</div>', unsafe_allow_html=True)
     else:
-        st.info("Waiting for data upload in the Ingestion tab.")
+        st.info("System idle. Please ingest security logs to begin analysis.")
 
 with t_report:
     if st.session_state['monthly_db'].empty:
-        st.warning("No data available. Please upload logs first.")
+        st.warning("Reporting engine unavailable until data is uploaded.")
     else:
         st.markdown('<div class="main-card">', unsafe_allow_html=True)
         col_r1, col_r2 = st.columns(2)
-        rep_range = col_r1.date_input("Reporting Period", [st.session_state['monthly_db']['Processed_Date'].min(), st.session_state['monthly_db']['Processed_Date'].max()])
-        rep_dev = col_r2.selectbox("Target Sensor ID", sorted(st.session_state['monthly_db']['Device Name'].unique().tolist()))
+        rep_range = col_r1.date_input("Report Window", [st.session_state['monthly_db']['Processed_Date'].min(), st.session_state['monthly_db']['Processed_Date'].max()])
+        rep_dev = col_r2.selectbox("Appliance", sorted(st.session_state['monthly_db']['Device Name'].unique().tolist()))
         
-        # --- NEW RFC FILTER TOGGLE ---
-        exclude_rfc = st.toggle("Exclude Internal/Private Network Traffic (RFC1918)", value=True, help="Hides Private IPs, Localhost, and Internal Network ranges from the geographic charts.")
+        exclude_rfc = st.toggle("Filter RFC1918 (Internal Traffic)", value=True)
 
         mask = (st.session_state['monthly_db']['Processed_Date'] >= rep_range[0])
         if len(rep_range) > 1: mask &= (st.session_state['monthly_db']['Processed_Date'] <= rep_range[1])
@@ -288,11 +366,10 @@ with t_report:
             m3.metric("UDP Kills", f"{uk:,}")
             m4.metric("Total Count", f"{total_sum:,}")
 
-            # Analytics (Original Logic/Plots)
+            # Analytics Plots
             tr_data = df.groupby('Domain')['Count'].sum().nlargest(10).reset_index()
             tkill_data = blocked.groupby('Domain')['Count'].sum().nlargest(10).reset_index()
             
-            # Matplotlib for PDF (Logic untouched)
             f1, a1 = plt.subplots(figsize=(10,5)); tr_data.set_index('Domain').plot(kind='bar', color='#2563eb', ax=a1); a1.ticklabel_format(style='plain', axis='y'); plt.xticks(rotation=45, ha='right'); plt.tight_layout()
             f2, a2 = plt.subplots(figsize=(10,5)); tkill_data.set_index('Domain').plot(kind='bar', color='#dc2626', ax=a2); a2.ticklabel_format(style='plain', axis='y'); plt.xticks(rotation=45, ha='right'); plt.tight_layout()
 
@@ -302,7 +379,6 @@ with t_report:
             cat_sum = cat_data.groupby(risk_col)['Count'].sum().sort_values(ascending=False).reset_index()
             f3, a3 = plt.subplots(figsize=(8,6)); labels = [str(x)[:20] for x in cat_sum[risk_col]]; w, t, at = a3.pie(cat_sum['Count'], autopct='%1.1f%%', colors=['#3b82f6','#ef4444','#10b981','#f59e0b']); a3.legend(w, labels, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1)); plt.tight_layout()
 
-            # --- GEOGRAPHIC LOGIC WITH RFC FILTER ---
             c_col = 'Server Country' if 'Server Country' in df.columns else 'Location'
             geo_df = df.copy()
             geo_blocked_df = blocked.copy()
@@ -318,23 +394,22 @@ with t_report:
             c_df = pd.DataFrame({'Total': total_c.values, 'Blocked': blocked_c.values}, index=total_c.index).reset_index()
             f4, a4 = plt.subplots(figsize=(12,6)); c_df.set_index(c_col).plot(kind='bar', ax=a4, color=['#2563eb','#dc2626']); a4.ticklabel_format(style='plain', axis='y'); plt.xticks(rotation=45, ha='right'); plt.tight_layout()
 
-            # Dynamic Text (Respecting Geo Filter)
             cl = total_c.index.tolist()
             c1, c2, c3 = (cl[0] if len(cl)>0 else "N/A"), (cl[1] if len(cl)>1 else "N/A"), (cl[2] if len(cl)>2 else "N/A")
             country_txt = f"Connections originated from {c1}, {c2} and {c3}. {c1} shows volume of {int(total_c[0] if not total_c.empty else 0):,} queries."
             cat_txt = f"Traffic is primarily categorized as {cat_sum[risk_col][0] if not cat_sum.empty else 'N/A'}."
 
-            # Dashboard Visuals
             st.markdown("---")
             col_chart1, col_chart2 = st.columns(2)
             with col_chart1:
-                st.plotly_chart(px.bar(tr_data, x='Domain', y='Count', title="Top Domain Requests", color_discrete_sequence=['#2563eb']), use_container_width=True)
-                st.plotly_chart(px.pie(cat_sum, values='Count', names=risk_col, title="Threat Categories", hole=.3), use_container_width=True)
+                st.plotly_chart(px.bar(tr_data, x='Domain', y='Count', title="Top Requested Domain", color_discrete_sequence=['#2563eb']), use_container_width=True)
+                st.plotly_chart(px.pie(cat_sum, values='Count', names=risk_col, title="Threat Categories", hole=.4, color_discrete_sequence=px.colors.qualitative.Prism), use_container_width=True)
             with col_chart2:
-                st.plotly_chart(px.bar(tkill_data, x='Domain', y='Count', title="Top Domains Mitigated", color_discrete_sequence=['#dc2626']), use_container_width=True)
-                st.plotly_chart(px.bar(c_df, x=c_col, y=['Total', 'Blocked'], barmode='group', title="Geographic Volume"), use_container_width=True)
+                st.plotly_chart(px.bar(tkill_data, x='Domain', y='Count', title="Top Killed Domain", color_discrete_sequence=['#dc2626']), use_container_width=True)
+                st.plotly_chart(px.bar(c_df, x=c_col, y=['Total', 'Blocked'], barmode='group', title="Geographic Volume (Non-RFC1918)", color_discrete_map={'Total':'#3b82f6','Blocked':'#ef4444'}), use_container_width=True)
 
-            if st.button("🏗️ COMPILE EXECUTIVE PDF REPORT"):
+            st.markdown("<br>", unsafe_allow_html=True)
+            if st.button("📑 GENERATE EXECUTIVE SUMMARY"):
                 pdf_b = generate_pdf_report(df, rep_range[0], rep_range[1] if len(rep_range)>1 else rep_range[0], rep_dev, dk, tk, uk, [f1, f2, f3, f4], {'cat_txt': cat_txt, 'country_txt': country_txt})
-                st.download_button("📥 DOWNLOAD PDF", pdf_b, f"Report_{rep_dev}.pdf", "application/pdf")
+                st.download_button("📥 DOWNLOAD PDF", pdf_b, f"ThreatReport_{rep_dev}.pdf", "application/pdf")
         st.markdown('</div>', unsafe_allow_html=True)
