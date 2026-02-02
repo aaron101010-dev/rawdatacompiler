@@ -309,6 +309,8 @@ with t_entry:
         st.session_state['file_registry'].append({'filename': up_file.name, 'date': log_date, 'rows': len(new_df)})
         st.balloons()
         st.success("Log data synchronized successfully.")
+        time.sleep(1)
+        st.rerun()  # Forces the UI to update sidebar and tables immediately
     st.markdown('</div>', unsafe_allow_html=True)
 
 with t_monthly:
