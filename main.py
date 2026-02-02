@@ -174,7 +174,7 @@ def generate_pdf_report(df, start_date, end_date, sensor_id, dk, tk, uk, figs, d
     pdf.add_secret_stamps(1)
     pdf.set_font("Arial", 'B', 18)
     pdf.set_text_color(29, 78, 216)
-    pdf.cell(0, 15, "APPLIED THREAT INTELLIGENCE WEEKLY REPORT", ln=True)
+    pdf.cell(0, 15, "APPLIED THREAT INTELLIGENCE MONTHLY REPORT", ln=True)
     pdf.set_font("Arial", '', 11)
     pdf.set_text_color(100, 116, 139)
     date_str = f"Reporting Period: {start_date.strftime('%B %d')} - {end_date.strftime('%B %d, %Y')}"
