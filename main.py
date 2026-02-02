@@ -9,7 +9,7 @@ from fpdf import FPDF
 
 # --- 1. CONFIG & PERFORMANCE ---
 pd.set_option("styler.render.max_elements", 1000000)
-st.set_page_config(page_title="Security Ranker Pro", layout="wide", page_icon="🛡️")
+st.set_page_config(page_title="Shield Data Compiler", layout="wide", page_icon="🛡️")
 
 # --- 2. JAW-DROPPING UI THEMING (REVISUALIZED) ---
 st.markdown("""
