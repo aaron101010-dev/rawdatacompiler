@@ -286,7 +286,7 @@ with st.sidebar:
 st.markdown("<div class='header-banner'><h1 style='margin:0; font-weight: 800; font-size: 2.8rem;'>Shield Raw Data Compiler</h1><p style='margin:0; opacity: 0.8;'>Compiler for Applied Threat Intelligence | Python Solutions OPC</p></div>", unsafe_allow_html=True)
 
 # --- 7. TABS ---
-t_entry, t_rank, t_deep, t_report = st.tabs(["📥 DATA INGESTION", "🛡️ THREAT RANKINGS", "🔍 CATEGORY TOP 10", "📈 EXECUTIVE REPORT"])
+t_entry, t_rank, t_deep, t_report = st.tabs(["📥 DATA INGESTION", "🛡️ THREAT RANKINGS", "🔍 CATEGORY TOP 15", "📈 EXECUTIVE REPORT"])
 
 with t_entry:
     st.markdown('<div class="main-card">', unsafe_allow_html=True)
@@ -331,7 +331,7 @@ with t_deep:
     if not st.session_state['monthly_db'].empty:
         db = st.session_state['monthly_db']
         st.markdown('<div class="main-card">', unsafe_allow_html=True)
-        st.subheader("Category Rankings: Top 10 Domains")
+        st.subheader("Category Rankings: Top 15 Domains")
         cat_mapping = {
             "This domain/IP has appeared on threat lists recently for risky or malicious activity, to include spamming, phishing, ransomware, and APTs.": "MALICIOUS",
             "This domain/IP was blocked because of pornography use, including child pornography.  Many pornography websites are used to compromise clients for malware or ransomware.": "PORNOGRAPHY",
@@ -374,11 +374,11 @@ with t_deep:
             
             if ans_col: agg_dict[ans_col] = 'first'
 
-            top_10 = cat_group.groupby('Domain').agg(agg_dict).reset_index()
-            top_10 = top_10.sort_values('Count', ascending=False).head(10)
-            top_10.rename(columns={'Count': 'Total Queries'}, inplace=True)
-            top_10.index = range(1, len(top_10) + 1)
-            st.table(top_10)
+            top_15 = cat_group.groupby('Domain').agg(agg_dict).reset_index()
+            top_15 = top_15.sort_values('Count', ascending=False).head(15)
+            top_15.rename(columns={'Count': 'Total Queries'}, inplace=True)
+            top_15.index = range(1, len(top_15) + 1)
+            st.table(top_15)
         st.markdown('</div>', unsafe_allow_html=True)
 
 with t_report:
@@ -407,8 +407,8 @@ with t_report:
             m1.metric("DNS Kills", f"{dk:,}"); m2.metric("TCP Kills", f"{tk:,}"); m3.metric("UDP Kills", f"{uk:,}"); m4.metric("Total Count", f"{total:,}")
 
             # Correct aggregation for charts (Domain ONLY)
-            tr_data = df_rep.groupby('Domain')['Count'].sum().nlargest(10).reset_index()
-            tkill_data = blocked_rep.groupby('Domain')['Count'].sum().nlargest(10).reset_index()
+            tr_data = df_rep.groupby('Domain')['Count'].sum().nlargest(15).reset_index()
+            tkill_data = blocked_rep.groupby('Domain')['Count'].sum().nlargest(15).reset_index()
             
             f1, a1 = plt.subplots(figsize=(10,5)); tr_data.set_index('Domain').plot(kind='bar', color='#2563eb', ax=a1); plt.xticks(rotation=45, ha='right'); plt.tight_layout()
             f2, a2 = plt.subplots(figsize=(10,5)); tkill_data.set_index('Domain').plot(kind='bar', color='#dc2626', ax=a2); plt.xticks(rotation=45, ha='right'); plt.tight_layout()
@@ -432,7 +432,7 @@ with t_report:
                 df_country_plot = df_country_plot[~df_country_plot[c_col].astype(str).str.contains(rfc_patterns, na=False)]
                 blocked_country_plot = blocked_country_plot[~blocked_country_plot[c_col].astype(str).str.contains(rfc_patterns, na=False)]
 
-            total_c = df_country_plot.groupby(c_col)['Count'].sum().nlargest(10)
+            total_c = df_country_plot.groupby(c_col)['Count'].sum().nlargest(15)
             blocked_c = blocked_country_plot.groupby(c_col)['Count'].sum().reindex(total_c.index, fill_value=0)
             c_df = pd.DataFrame({'Total': total_c.values, 'Blocked': blocked_c.values}, index=total_c.index).reset_index()
             
