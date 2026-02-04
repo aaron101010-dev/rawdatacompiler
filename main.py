@@ -423,6 +423,10 @@ with t_report:
             df_country_plot = df_rep.copy()
             blocked_country_plot = blocked_rep.copy()
             
+            # REMOVE UNKNOWN DOMAINS FROM COUNTRY CATEGORY
+            df_country_plot = df_country_plot[~df_country_plot[c_col].astype(str).str.contains('(?i)unknown', na=False)]
+            blocked_country_plot = blocked_country_plot[~blocked_country_plot[c_col].astype(str).str.contains('(?i)unknown', na=False)]
+
             if exclude_rfc:
                 rfc_patterns = r'(?i)RFC|Private|Reserved|Local|Internal'
                 df_country_plot = df_country_plot[~df_country_plot[c_col].astype(str).str.contains(rfc_patterns, na=False)]
